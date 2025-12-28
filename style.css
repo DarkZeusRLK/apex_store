@@ -489,12 +489,27 @@ footer {
   margin-top: 3rem;
 }
 
+/* --- NIVELAMENTO DOS CARDS DE SERVIÇO --- */
 .service-box {
   background: var(--card-bg);
   padding: 2.5rem;
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: 0.3s;
+
+  /* Adicione estas 3 linhas abaixo: */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.service-features {
+  list-style: none;
+  margin-bottom: 2rem;
+
+  /* Isso faz a lista ocupar todo o espaço disponível, 
+     empurrando o botão para o final do card */
+  flex-grow: 1;
 }
 
 .service-box.active {
@@ -624,4 +639,54 @@ footer {
   border-radius: 10px;
   align-items: center;
   color: var(--text-dim);
+}
+/* --- ANIMAÇÃO TYPEWRITER --- */
+#typewriter {
+  border-right: 3px solid var(--secondary); /* Cursor da digitação */
+  padding-right: 5px;
+  white-space: nowrap;
+  animation: blink-cursor 0.7s step-end infinite;
+}
+
+@keyframes blink-cursor {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: var(--secondary);
+  }
+}
+
+/* --- NIVELAMENTO DE TEXTOS E ÍCONES --- */
+
+/* Nivelar itens da lista de serviços */
+.service-features li {
+  display: flex;
+  align-items: center; /* Centraliza verticalmente o ícone com o texto */
+  gap: 0.8rem;
+  line-height: 1; /* Garante que a altura da linha não desloque o texto */
+}
+
+/* Centralizar seta nos botões de texto */
+.btn-text {
+  display: inline-flex; /* Mudado para inline-flex para alinhar melhor */
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  line-height: 1;
+}
+
+.btn-text i {
+  display: flex;
+  align-items: center;
+  margin-top: 2px; /* Ajuste fino para alinhar com a base da fonte */
+}
+
+/* Garantir que os ícones do Lucide tenham tamanho fixo para não quebrar o alinhamento */
+.service-features li i,
+.btn-text i {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
 }

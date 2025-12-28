@@ -83,3 +83,50 @@ document.addEventListener("DOMContentLoaded", () => {
     statsObserver.observe(statsSection);
   }
 });
+// Lógica da Animação de Digitação (Typewriter)
+const textElement = document.getElementById("typewriter");
+const words = [
+  "Experiência única",
+  "Cidade Especial",
+  "Comunidade de Elite",
+  "Projeto Inovador",
+  "Alta Performance",
+];
+
+let wordIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+let typeSpeed = 150;
+
+function typeEffect() {
+  const currentWord = words[wordIndex];
+
+  if (isDeleting) {
+    // Remove letra
+    textElement.textContent = currentWord.substring(0, charIndex - 1);
+    charIndex--;
+    typeSpeed = 50; // Velocidade ao apagar é mais rápida
+  } else {
+    // Adiciona letra
+    textElement.textContent = currentWord.substring(0, charIndex + 1);
+    charIndex++;
+    typeSpeed = 150;
+  }
+
+  // Lógica de transição entre escrever e apagar
+  if (!isDeleting && charIndex === currentWord.length) {
+    isDeleting = true;
+    typeSpeed = 2000; // Pausa quando termina de escrever a palavra
+  } else if (isDeleting && charIndex === 0) {
+    isDeleting = false;
+    wordIndex = (wordIndex + 1) % words.length; // Passa para a próxima palavra
+    typeSpeed = 500; // Pequena pausa antes de começar a próxima
+  }
+
+  setTimeout(typeEffect, typeSpeed);
+}
+
+// Inicia a animação após o carregamento
+document.addEventListener("DOMContentLoaded", () => {
+  if (textElement) typeEffect();
+});

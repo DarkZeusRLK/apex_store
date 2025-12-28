@@ -1,15 +1,32 @@
-// /api/auth.js
 export default async function handler(req, res) {
   const { code } = req.query;
 
-  if (code) {
-    // 1. Troca o código pelo Token do Usuário
-    // 2. Busca o perfil do usuário no Discord
-    // 3. Usa o BOT_TOKEN para ver se o usuário tem o cargo em GUILD_ID
-    // 4. Se sim, redireciona para /admin/dashboard com um Token temporário
-    // (Por segurança, esta lógica deve ser processada no lado do servidor)
+  if (!code) {
+    // Redireciona para o login do Discord se não houver código
+    return res.redirect("URL_DO_SEU_OAUTH_DISCORD");
+  }
 
-    // Simulação de redirecionamento após validação:
-    res.redirect("/p/admin-dash-77");
+  try {
+    // 1. Trocar o código pelo Access Token do Usuário (Discord API)
+    // 2. Buscar o perfil e os cargos do usuário no seu servidor
+    // 3. Verificar se o ID do cargo de CEO está presente
+
+    const isCEO = true; // Aqui entrará a lógica real de validação com o Bot
+
+    if (isCEO) {
+      // Define um cookie de autenticação simples para o navegador
+      res.setHeader(
+        "Set-Cookie",
+        "apex_auth=true; Path=/; HttpOnly; Max-Age=86400; SameSite=Strict"
+      );
+      // Redireciona para o painel
+      return res.redirect("/p/admin-dash-77");
+    } else {
+      return res.send(
+        '<script>alert("Acesso Negado: Você não possui o cargo de CEO."); window.location.href="/admin-login";</script>'
+      );
+    }
+  } catch (error) {
+    return res.status(500).json({ error: "Erro na autenticação" });
   }
 }

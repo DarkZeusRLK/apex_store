@@ -3,7 +3,6 @@ import { join } from "path";
 
 export default async function handler(req, res) {
   try {
-    // 1. PEGAR COOKIES
     const cookies = req.headers.cookie || "";
     const hasAuth = cookies.includes("apex_auth=true");
 
@@ -11,25 +10,27 @@ export default async function handler(req, res) {
       return res.redirect("/admin-login");
     }
 
-    // 2. TENTAR ENCONTRAR O ARQUIVO EM DIFERENTES CAMINHOS (Resiliência)
-    // Caminho A: Baseado no processo atual
-    // Caminho B: Baseado no diretório do script
-    const pathA = join(process.cwd(), "p", "admin.html");
-    const pathB = join(process.cwd(), "admin.html"); // Caso o arquivo esteja na raiz
+    // LISTA DE CAMINHOS POSSÍVEIS (Adicionamos o 'public')
+    const caminhos = [
+      join(process.cwd(), "public", "p", "admin.html"), // Caminho atual (public/p/admin.html)
+      join(process.cwd(), "p", "admin.html"), // Caso você mova para fora da public
+      join(process.cwd(), "admin.html"), // Caso esteja na raiz
+    ];
 
     let finalPath = "";
+    for (const caminho of caminhos) {
+      if (existsSync(caminho)) {
+        finalPath = caminho;
+        break;
+      }
+    }
 
-    if (existsSync(pathA)) {
-      finalPath = pathA;
-    } else if (existsSync(pathB)) {
-      finalPath = pathB;
-    } else {
-      // Se não achar em lugar nenhum, lista o que ele vê para te ajudar no log
-      console.error("Diretório atual:", process.cwd());
+    if (!finalPath) {
+      console.error("Arquivo não encontrado em nenhum dos locais:", caminhos);
       return res
         .status(500)
         .send(
-          "Erro: O arquivo admin.html não foi encontrado na pasta /p/. Verifique se ele está lá."
+          "Erro: O arquivo admin.html não foi encontrado. Verifique se ele está em /public/p/admin.html"
         );
     }
 
@@ -38,8 +39,6 @@ export default async function handler(req, res) {
     return res.status(200).send(htmlContent);
   } catch (error) {
     console.error("Erro no Gatekeeper:", error);
-    return res
-      .status(500)
-      .json({ error: "Erro interno ao processar o acesso." });
+    return res.status(500).json({ error: "Erro interno no servidor." });
   }
 }

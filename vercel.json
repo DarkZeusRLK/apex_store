@@ -5,9 +5,17 @@
     { "source": "/api/pix", "destination": "/api/pix.js" },
     { "source": "/admin", "destination": "/api/admin-gate" },
     { "source": "/admin-login", "destination": "/p/login" },
-    { "source": "/checkout", "destination": "/p/checkout" }
+    { "source": "/checkout", "destination": "/p/checkout" },
+    { "source": "/termos", "destination": "/p/termos" },
+    { "source": "/reembolso", "destination": "/p/reembolso" },
+    { "source": "/privacidade", "destination": "/p/privacidade" }
   ],
   "redirects": [
-    { "source": "/p/admin", "destination": "/admin", "permanent": true }
+    { "source": "/p/admin(.*)", "destination": "/admin", "permanent": true },
+    {
+      "source": "/p/login(.*)",
+      "destination": "/admin-login",
+      "permanent": true
+    }
   ]
 }

@@ -2,8 +2,8 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/p/termos", "destination": "/p/termos.html" },
-    { "source": "/p/reembolso", "destination": "/p/reembolso.html" },
-    { "source": "/p/privacidade", "destination": "/p/privacidade.html" }
+    { "source": "/p/7Xk9L2", "destination": "/p/termos.html" },
+    { "source": "/p/3M2N1B", "destination": "/p/reembolso.html" },
+    { "source": "/p/9F8E7D", "destination": "/p/privacidade.html" }
   ]
 }

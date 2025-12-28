@@ -77,10 +77,10 @@ export default async function handler(req, res) {
         "Set-Cookie",
         "apex_auth=true; Path=/; HttpOnly; Max-Age=86400; SameSite=Strict"
       );
-      return res.redirect("/p/admin-dash-77");
+      return res.redirect("/p/admin");
     } else {
       return res.send(
-        '<script>alert("Acesso Negado: Você não é CEO."); window.location.href="/admin-login";</script>'
+        '<script>alert("Acesso Negado: Você não é CEO."); window.location.href="/p/login";</script>'
       );
     }
   } catch (error) {

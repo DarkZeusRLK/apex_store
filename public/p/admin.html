@@ -10,29 +10,18 @@
   <link rel="shortcut icon" href="../Imagens/static_1.png" type="image/x-icon">
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
-    function checkAuth() {
-      // Agora procuramos pelo cookie 'apex_ui_logged'
-      const isLoggedIn = document.cookie.split(';').some((item) => item.trim().startsWith('apex_ui_logged='));
+    (function () {
+      // Função para verificar se o cookie de interface existe
+      const checkCookie = () => document.cookie.split(';').some(c => c.trim().startsWith('apex_ui_logged='));
 
-      if (!isLoggedIn) {
-        document.documentElement.style.display = 'none';
-        alert("Sessão expirada ou não autorizada. Faça login novamente.");
+      if (checkCookie()) {
+        // CAMADA 2: Se o cookie existe, libera a visualização
+        document.documentElement.style.display = 'block';
+      } else {
+        // CAMADA 3: Se não existe, bloqueia e expulsa para o login
         window.location.href = "/admin-login";
       }
-      (function () {
-        // Verifica o cookie visível
-        const isLoggedIn = document.cookie.split(';').some((item) => item.trim().startsWith('apex_ui_logged='));
-
-        if (isLoggedIn) {
-          // Se estiver logado, libera o HTML
-          document.documentElement.style.display = 'block';
-        } else {
-          // Se não, redireciona imediatamente
-          window.location.href = "/admin-login";
-        }
-      })();
-    }
-    checkAuth();
+    })();
   </script>
   <style>
     :root {

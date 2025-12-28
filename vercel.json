@@ -3,16 +3,11 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/api/pix", "destination": "/api/pix.js" },
-    { "source": "/admin", "destination": "/p/admin" },
+    { "source": "/admin", "destination": "/api/admin-gate" },
     { "source": "/admin-login", "destination": "/p/login" },
     { "source": "/checkout", "destination": "/p/checkout" }
   ],
   "redirects": [
-    { "source": "/p/admin(.*)", "destination": "/admin", "permanent": true },
-    {
-      "source": "/p/login(.*)",
-      "destination": "/admin-login",
-      "permanent": true
-    }
+    { "source": "/p/admin", "destination": "/admin", "permanent": true }
   ]
 }

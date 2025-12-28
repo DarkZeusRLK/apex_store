@@ -901,14 +901,3 @@ footer {
   font-size: 0.95rem;
   line-height: 1.4;
 }
-.nav-admin li a {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  border-radius: 8px;
-  transition: background 0.3s;
-}
-
-.nav-admin li a:hover {
-  background: rgba(255, 255, 255, 0.1);
-}

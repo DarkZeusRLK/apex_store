@@ -7,8 +7,10 @@
   <title>Apex Store | Checkout Seguro</title>
   <link rel="stylesheet" href="/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../Imagens/static_1.png" type="image/x-icon">
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
+    /* ... (Seus estilos CSS permanecem os mesmos) ... */
     .checkout-container {
       min-height: 100vh;
       display: flex;
@@ -28,6 +30,7 @@
       display: flex;
       justify-content: space-between;
       margin-bottom: 2rem;
+      position: relative;
     }
 
     .step {
@@ -37,6 +40,7 @@
       border-radius: 50px;
       font-size: 0.8rem;
       color: rgba(255, 255, 255, 0.5);
+      transition: 0.3s;
     }
 
     .step.active {
@@ -69,12 +73,32 @@
       gap: 8px;
       width: 100%;
       margin-top: 1.5rem;
-      font-family: inherit;
       transition: 0.3s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
     .btn-text:hover {
       color: white;
+    }
+
+    .btn-secondary {
+      color: black;
+    }
+
+    .btn-hover {
+      color: white;
+    }
+
+    .coupon-section {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    #msg-cupom {
+      font-size: 0.8rem;
+      margin-top: 5px;
+      display: block;
     }
 
     @keyframes slideUp {
@@ -101,30 +125,46 @@
 
       <div id="view-revisao" class="modal-card">
         <div class="logo" style="font-size: 1.2rem; margin-bottom: 1rem;">APEX<span>CHECKOUT</span></div>
-        <h1 id="display-produto" style="margin-top: 1.5rem; font-size: 1.8rem;">---</h1>
+        <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981; border-color: #10b981;">Ordem de Venda Ativa</span>
+
+        <h1 id="display-produto" style="margin-top: 1.5rem; font-size: 1.8rem;">Carregando...</h1>
         <div class="price-tag">R$ <span id="display-valor">0,00</span></div>
+
         <div style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
-          <p id="display-desc" style="font-size: 0.95rem; color: rgba(255,255,255,0.7); line-height: 1.6;">---</p>
+          <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--primary);">Descrição do Pedido:</h4>
+          <p id="display-desc" style="font-size: 0.95rem; color: rgba(255,255,255,0.7); line-height: 1.6;">Aguardando detalhes...</p>
         </div>
-        <button class="btn-primary" style="width: 100%;" onclick="irParaPagamento()">
-          Confirmar e Pagar <i data-lucide="chevron-right"></i>
+
+        <div class="coupon-section">
+          <div class="input-group">
+            <label>Cupom de Desconto</label>
+            <div style="display: flex; gap: 10px;">
+              <input type="text" id="input-cupom" placeholder="Insira seu cupom" style="flex: 1;">
+              <button class="btn-secondary" onclick="aplicarCupom()" style="padding: 0 15px;">Aplicar</button>
+            </div>
+            <small id="msg-cupom"></small>
+          </div>
+        </div>
+
+        <button class="btn-primary" style="width: 100%; border:none; cursor:pointer; margin-top: 1.5rem;" onclick="irParaPagamento()">
+          Confirmar e Pagar Agora <i data-lucide="chevron-right"></i>
         </button>
       </div>
 
       <div id="view-pagamento" class="modal-card pix-area">
         <div class="logo" style="font-size: 1.2rem; margin-bottom: 1rem;">METODO<span>PAGAMENTO</span></div>
         <h3>Pagamento via PIX</h3>
-        <div style="background: white; padding: 15px; display: inline-block; border-radius: 12px; margin: 1.5rem 0;">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=ChavePixExemplo" alt="QR Code Pix">
+        <div style="background: white; padding: 15px; display: inline-block; border-radius: 12px; margin-bottom: 1.5rem; margin-top: 1rem;">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=ApexStorePixStaticPlaceholder" alt="QR Code Pix">
         </div>
         <div class="input-group">
           <label>Chave Pix (Copia e Cola)</label>
           <div style="display: flex; gap: 10px;">
-            <input type="text" value="suachavepixaqui123" readonly id="pix-chave" style="flex: 1;">
+            <input type="text" value="suachavepixaqui123456789" readonly id="pix-chave" style="flex: 1;">
             <button class="btn-secondary" onclick="copiarPix()" style="padding: 0 15px;"><i data-lucide="copy"></i></button>
           </div>
         </div>
-        <button class="btn-text" onclick="location.reload()">
+        <button class="btn-text" onclick="window.location.reload()">
           <i data-lucide="arrow-left"></i> Voltar
         </button>
       </div>
@@ -133,13 +173,46 @@
 
   <script>
     lucide.createIcons();
-    const params = new URLSearchParams(window.location.search);
 
-    document.getElementById('display-produto').innerText = params.get('n') || "Produto";
-    document.getElementById('display-desc').innerText = params.get('d') || "Sem descrição.";
+    const urlParams = new URLSearchParams(window.location.search);
+    const nome = urlParams.get('n') || "Produto Indisponível";
+    const desc = urlParams.get('d') || "Nenhuma descrição fornecida.";
 
-    const valor = parseFloat(params.get('v')) || 0;
-    document.getElementById('display-valor').innerText = valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+    // Valor original vindo da URL
+    let valorRaw = urlParams.get('v') || "0";
+    let valorOriginal = parseFloat(valorRaw.replace(',', '.'));
+    let valorFinal = valorOriginal;
+
+    // Dados do cupom permitidos para este link específico
+    const cupomPermitido = urlParams.get('cp'); // Ex: APEX10
+    const descontoPermitido = parseFloat(urlParams.get('pct')); // Ex: 10
+
+    // Preencher na tela
+    document.getElementById('display-produto').innerText = nome;
+    document.getElementById('display-desc').innerText = desc;
+    document.getElementById('display-valor').innerText = valorOriginal.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+
+    function aplicarCupom() {
+      const input = document.getElementById('input-cupom').value.trim().toUpperCase();
+      const msg = document.getElementById('msg-cupom');
+
+      // Validação: O que o usuário digitou é igual ao que está no link?
+      if (cupomPermitido && input === cupomPermitido) {
+        const desconto = (valorOriginal * descontoPermitido) / 100;
+        valorFinal = valorOriginal - desconto;
+
+        document.getElementById('display-valor').innerText = valorFinal.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+        msg.style.color = "#10b981";
+        msg.innerText = `Cupom '${input}' aplicado! -${descontoPermitido}% (R$ ${desconto.toFixed(2)})`;
+
+        // Travar campos após sucesso
+        document.getElementById('input-cupom').disabled = true;
+        event.target.disabled = true;
+      } else {
+        msg.style.color = "#ef4444";
+        msg.innerText = "Este cupom não é válido para este link.";
+      }
+    }
 
     function irParaPagamento() {
       document.getElementById('view-revisao').style.display = "none";
@@ -149,10 +222,8 @@
     }
 
     function copiarPix() {
-      const input = document.getElementById("pix-chave");
-      input.select();
-      navigator.clipboard.writeText(input.value);
-      alert("Copiado!");
+      const chave = document.getElementById("pix-chave").value;
+      navigator.clipboard.writeText(chave).then(() => { alert("Chave Pix copiada!"); });
     }
   </script>
 </body>

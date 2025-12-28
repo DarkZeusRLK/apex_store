@@ -10,7 +10,6 @@
   <link rel="shortcut icon" href="../Imagens/static_1.png" type="image/x-icon">
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
-    /* ... (Seus estilos CSS permanecem os mesmos) ... */
     .checkout-container {
       min-height: 100vh;
       display: flex;
@@ -81,24 +80,19 @@
       color: white;
     }
 
-    .btn-secondary {
-      color: black;
+    /* Estilo para o ícone de carregamento girando */
+    .spin {
+      animation: rotate 1s linear infinite;
     }
 
-    .btn-hover {
-      color: white;
-    }
+    @keyframes rotate {
+      from {
+        transform: rotate(0deg);
+      }
 
-    .coupon-section {
-      margin-top: 1.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    #msg-cupom {
-      font-size: 0.8rem;
-      margin-top: 5px;
-      display: block;
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     @keyframes slideUp {
@@ -112,12 +106,23 @@
         transform: translateY(0);
       }
     }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
   </style>
 </head>
 
 <body>
   <div class="checkout-container">
     <div class="checkout-card">
+
       <div class="step-indicator">
         <div class="step active" id="step1">1. Revisão</div>
         <div class="step" id="step2">2. Pagamento</div>
@@ -127,97 +132,122 @@
         <div class="logo" style="font-size: 1.2rem; margin-bottom: 1rem;">APEX<span>CHECKOUT</span></div>
         <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981; border-color: #10b981;">Ordem de Venda Ativa</span>
 
-        <h1 id="display-produto" style="margin-top: 1.5rem; font-size: 1.8rem;">Carregando...</h1>
+        <h1 id="display-produto" style="margin-top: 1.5rem; font-size: 1.8rem;">---</h1>
         <div class="price-tag">R$ <span id="display-valor">0,00</span></div>
 
         <div style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
           <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--primary);">Descrição do Pedido:</h4>
-          <p id="display-desc" style="font-size: 0.95rem; color: rgba(255,255,255,0.7); line-height: 1.6;">Aguardando detalhes...</p>
+          <p id="display-desc" style="font-size: 0.95rem; color: rgba(255,255,255,0.7); line-height: 1.6;">---</p>
         </div>
 
-        <div class="coupon-section">
-          <div class="input-group">
-            <label>Cupom de Desconto</label>
-            <div style="display: flex; gap: 10px;">
-              <input type="text" id="input-cupom" placeholder="Insira seu cupom" style="flex: 1;">
-              <button class="btn-secondary" onclick="aplicarCupom()" style="padding: 0 15px;">Aplicar</button>
-            </div>
-            <small id="msg-cupom"></small>
-          </div>
-        </div>
-
-        <button class="btn-primary" style="width: 100%; border:none; cursor:pointer; margin-top: 1.5rem;" onclick="irParaPagamento()">
-          Confirmar e Pagar Agora <i data-lucide="chevron-right"></i>
+        <button id="btn-pagar" class="btn-primary" style="width: 100%; border:none; cursor:pointer;" onclick="gerarPagamentoReal()">
+          Confirmar e Gerar PIX <i data-lucide="chevron-right"></i>
         </button>
       </div>
 
       <div id="view-pagamento" class="modal-card pix-area">
         <div class="logo" style="font-size: 1.2rem; margin-bottom: 1rem;">METODO<span>PAGAMENTO</span></div>
         <h3>Pagamento via PIX</h3>
-        <div style="background: white; padding: 15px; display: inline-block; border-radius: 12px; margin-bottom: 1.5rem; margin-top: 1rem;">
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=ApexStorePixStaticPlaceholder" alt="QR Code Pix">
+        <p style="opacity: 0.6; font-size: 0.9rem; margin-bottom: 1rem;">Escaneie o QR Code ou copie a chave abaixo</p>
+
+        <div style="background: white; padding: 15px; display: inline-block; border-radius: 12px; margin-bottom: 1.5rem;">
+          <img src="" alt="QR Code Pix" id="qr-code-img" style="display: block; width: 200px; height: 200px;">
         </div>
+
         <div class="input-group">
           <label>Chave Pix (Copia e Cola)</label>
           <div style="display: flex; gap: 10px;">
-            <input type="text" value="suachavepixaqui123456789" readonly id="pix-chave" style="flex: 1;">
-            <button class="btn-secondary" onclick="copiarPix()" style="padding: 0 15px;"><i data-lucide="copy"></i></button>
+            <input type="text" value="" readonly id="pix-chave" style="flex: 1; background: rgba(255,255,255,0.05);">
+            <button class="btn-secondary" onclick="copiarPix()" style="padding: 0 15px; color: #000;"><i data-lucide="copy"></i></button>
           </div>
         </div>
+
+        <div class="info-note" style="margin-top: 1.5rem; text-align: left; background: rgba(139, 92, 246, 0.05); padding: 12px; border-radius: 8px; border: 1px solid rgba(139, 92, 246, 0.1);">
+          <p style="font-size: 0.85rem; color: rgba(255,255,255,0.7);">
+            <i data-lucide="shield-check" style="width: 14px; vertical-align: middle; margin-right: 5px; color: var(--primary);"></i>
+            Após o pagamento, o seu script será liberado automaticamente.
+          </p>
+        </div>
+
         <button class="btn-text" onclick="window.location.reload()">
-          <i data-lucide="arrow-left"></i> Voltar
+          <i data-lucide="arrow-left"></i> Voltar e revisar
         </button>
       </div>
+
     </div>
   </div>
 
   <script>
+    // Inicializa os ícones do Lucide
     lucide.createIcons();
+
+    // 1. CAPTURAR DADOS DA URL
     const params = new URLSearchParams(window.location.search);
-    const valorRaw = params.get('v') || "0";
+    const nomeProd = params.get('n') || "Produto Indisponível";
+    const valorProd = params.get('v') || "0";
+    const descProd = params.get('d') || "Nenhuma descrição fornecida.";
 
-    document.getElementById('display-produto').innerText = params.get('n') || "Produto";
-    document.getElementById('display-desc').innerText = params.get('d') || "Sem descrição.";
-    document.getElementById('display-valor').innerText = parseFloat(valorRaw).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+    // 2. PREENCHER DADOS INICIAIS NA TELA
+    document.getElementById('display-produto').innerText = nomeProd;
+    document.getElementById('display-desc').innerText = descProd;
+    document.getElementById('display-valor').innerText = parseFloat(valorProd.replace(',', '.')).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
 
+    // 3. FUNÇÃO PARA GERAR O PAGAMENTO REAL VIA API
     async function gerarPagamentoReal() {
       const btn = document.getElementById('btn-pagar');
       const originalText = btn.innerHTML;
 
+      // Estado de carregamento
       btn.disabled = true;
-      btn.innerHTML = "Processando... <i data-lucide='loader' class='spin'></i>";
+      btn.innerHTML = "Gerando PIX... <i data-lucide='loader' class='spin'></i>";
       lucide.createIcons();
 
       try {
-        // Busca o PIX real da sua API
-        const response = await fetch(`/api/pix?valor=${valorRaw}&nome_produto=${encodeURIComponent(params.get('n'))}`);
+        // Chamada para a sua API Serverless no Vercel
+        const response = await fetch(`/api/pix?valor=${valorProd.replace(',', '.')}&nome_produto=${encodeURIComponent(nomeProd)}`);
 
-        if (!response.ok) throw new Error();
+        if (!response.ok) throw new Error("Erro na resposta do servidor");
 
         const data = await response.json();
 
-        // Preenche o QR Code e a chave copia e cola
-        document.querySelector('.pix-area img').src = data.qrcode;
-        document.getElementById('pix-chave').value = data.copia_e_cola;
+        if (data.copia_e_cola) {
+          // Preenche os dados recebidos da API
+          document.getElementById('qr-code-img').src = data.qrcode;
+          document.getElementById('pix-chave').value = data.copia_e_cola;
 
-        // Troca de aba
-        document.getElementById('view-revisao').style.display = "none";
-        document.getElementById('view-pagamento').style.display = "block";
-        document.getElementById('step1').classList.remove('active');
-        document.getElementById('step2').classList.add('active');
+          // Alterna as visualizações
+          document.getElementById('view-revisao').style.display = "none";
+          document.getElementById('view-pagamento').style.display = "block";
+
+          // Atualiza os indicadores de passos
+          document.getElementById('step1').classList.remove('active');
+          document.getElementById('step2').classList.add('active');
+        } else {
+          throw new Error("Dados de PIX inválidos");
+        }
 
       } catch (err) {
-        alert("Erro ao conectar com o servidor de pagamento.");
+        console.error(err);
+        alert("Ocorreu um erro ao gerar o seu pagamento. Por favor, tente novamente.");
+
+        // Volta o botão ao estado original em caso de erro
         btn.disabled = false;
         btn.innerHTML = originalText;
         lucide.createIcons();
       }
     }
 
+    // 4. FUNÇÃO PARA COPIAR A CHAVE PIX
     function copiarPix() {
       const input = document.getElementById("pix-chave");
-      navigator.clipboard.writeText(input.value);
-      alert("Código PIX copiado!");
+      input.select();
+      input.setSelectionRange(0, 99999); // Para dispositivos móveis
+
+      navigator.clipboard.writeText(input.value).then(() => {
+        alert("Código PIX Copiado! Agora basta colar no seu aplicativo do banco.");
+      }).catch(() => {
+        alert("Erro ao copiar. Por favor, selecione o texto e copie manualmente.");
+      });
     }
   </script>
 </body>

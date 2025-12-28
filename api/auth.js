@@ -74,7 +74,7 @@ export default async function handler(req, res) {
       return res.redirect("/p/admin-dash-77");
     } else {
       return res.send(
-        '<script>alert("Acesso Negado: Você não possui o cargo de CEO."); window.location.href="/admin-login";</script>'
+        '<script>alert("Acesso Negado: Você não possui o cargo de CEO."); window.location.href="/p/login.html";</script>'
       );
     }
   } catch (error) {

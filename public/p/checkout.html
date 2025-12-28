@@ -174,47 +174,50 @@
   <script>
     lucide.createIcons();
     const params = new URLSearchParams(window.location.search);
+    const valorRaw = params.get('v') || "0";
 
-    const nomeProd = params.get('n') || "Produto";
-    const valorProd = params.get('v') || "0";
-
-    document.getElementById('display-produto').innerText = nomeProd;
+    document.getElementById('display-produto').innerText = params.get('n') || "Produto";
     document.getElementById('display-desc').innerText = params.get('d') || "Sem descrição.";
-    document.getElementById('display-valor').innerText = parseFloat(valorProd).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+    document.getElementById('display-valor').innerText = parseFloat(valorRaw).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
 
-    async function irParaPagamento() {
-      const btn = event.currentTarget;
-      btn.innerHTML = "Gerando PIX... <i class='loader'></i>"; // Feedback de carregamento
+    async function gerarPagamentoReal() {
+      const btn = document.getElementById('btn-pagar');
+      const originalText = btn.innerHTML;
+
       btn.disabled = true;
+      btn.innerHTML = "Processando... <i data-lucide='loader' class='spin'></i>";
+      lucide.createIcons();
 
       try {
-        // Chama a sua nova API
-        const response = await fetch(`/api/pix?valor=${valorProd}&nome_produto=${encodeURIComponent(nomeProd)}`);
+        // Busca o PIX real da sua API
+        const response = await fetch(`/api/pix?valor=${valorRaw}&nome_produto=${encodeURIComponent(params.get('n'))}`);
+
+        if (!response.ok) throw new Error();
+
         const data = await response.json();
 
-        if (data.copia_e_cola) {
-          // Atualiza o QR Code e a Chave na tela
-          document.querySelector('.pix-area img').src = data.qrcode;
-          document.getElementById('pix-chave').value = data.copia_e_cola;
+        // Preenche o QR Code e a chave copia e cola
+        document.querySelector('.pix-area img').src = data.qrcode;
+        document.getElementById('pix-chave').value = data.copia_e_cola;
 
-          // Troca de tela
-          document.getElementById('view-revisao').style.display = "none";
-          document.getElementById('view-pagamento').style.display = "block";
-          document.getElementById('step1').classList.remove('active');
-          document.getElementById('step2').classList.add('active');
-        }
+        // Troca de aba
+        document.getElementById('view-revisao').style.display = "none";
+        document.getElementById('view-pagamento').style.display = "block";
+        document.getElementById('step1').classList.remove('active');
+        document.getElementById('step2').classList.add('active');
+
       } catch (err) {
-        alert("Erro ao gerar pagamento. Tente novamente.");
+        alert("Erro ao conectar com o servidor de pagamento.");
         btn.disabled = false;
-        btn.innerText = "Confirmar e Pagar";
+        btn.innerHTML = originalText;
+        lucide.createIcons();
       }
     }
 
     function copiarPix() {
       const input = document.getElementById("pix-chave");
-      input.select();
       navigator.clipboard.writeText(input.value);
-      alert("Código PIX Copiado!");
+      alert("Código PIX copiado!");
     }
   </script>
 </body>

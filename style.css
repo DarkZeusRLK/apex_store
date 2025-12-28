@@ -191,6 +191,16 @@ nav {
   margin-bottom: 4rem;
   margin-top: 6rem;
 }
+.section-header .badge {
+  display: inline-block; /* Permite a aplicação de margens verticais */
+  margin-bottom: 1.5rem; /* Cria o espaço entre a badge e o título h2 */
+  text-transform: uppercase; /* Opcional: deixa mais formal e profissional */
+  letter-spacing: 1px; /* Opcional: melhora a leitura */
+}
+.section-header h2 {
+  margin-top: 0;
+  line-height: 1.2;
+}
 .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -350,7 +360,24 @@ nav {
   width: 20px;
   height: 20px;
 }
+.client-name {
+  display: block;
+  font-weight: 800;
+  color: var(--text);
+  font-size: 1rem;
+}
 
+.client-role {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--secondary);
+}
+.client-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: auto; /* Empurra para o final do card */
+}
 .client-meta img {
   width: 45px;
   height: 45px;
@@ -413,5 +440,188 @@ footer {
   text-align: center;
   border-top: 1px solid rgba(59, 130, 246, 0.1);
   margin-top: 6rem;
+  color: var(--text-dim);
+}
+/* Organização do Rodapé Profissional */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 4rem;
+  padding-bottom: 3rem;
+}
+
+.footer-links h4 {
+  color: var(--text);
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.footer-links ul {
+  list-style: none;
+}
+
+.footer-links ul li {
+  margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  transition: 0.3s;
+}
+
+.footer-links a:hover {
+  color: var(--secondary);
+}
+
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 2rem;
+  font-size: 0.8rem;
+}
+/* --- ESTILO DE SERVIÇOS DETALHADOS --- */
+.detailed-services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.service-box {
+  background: var(--card-bg);
+  padding: 2.5rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: 0.3s;
+}
+
+.service-box.active {
+  border-color: var(--secondary);
+  background: linear-gradient(
+    180deg,
+    rgba(6, 182, 212, 0.05) 0%,
+    transparent 100%
+  );
+}
+
+.service-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.service-header i {
+  color: var(--secondary);
+  width: 32px;
+}
+
+.service-features {
+  list-style: none;
+  margin-bottom: 2rem;
+}
+
+.service-features li {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+}
+
+.service-features li i {
+  width: 16px;
+  color: var(--secondary);
+}
+
+.btn-text {
+  color: var(--secondary);
+  text-decoration: none;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: 0.3s;
+}
+
+.btn-text:hover {
+  gap: 1rem;
+}
+
+/* --- CORREÇÃO DA DOCUMENTAÇÃO (WIKI) --- */
+.docs-wrapper {
+  display: flex;
+  gap: 0; /* Removido gap para usar bordas limpas */
+  background: var(--card-bg);
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-top: 4rem;
+  min-height: 500px;
+}
+
+.docs-sidebar {
+  width: 280px; /* Aumentado para caber o texto */
+  padding: 2rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0; /* Impede a barra de diminuir */
+}
+
+.docs-sidebar h4 {
+  margin-bottom: 2rem;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--secondary);
+}
+
+.docs-sidebar nav {
+  display: flex;
+  flex-direction: column; /* Garante que fiquem um abaixo do outro */
+  gap: 1.2rem; /* Espaçamento entre os links */
+}
+
+.docs-sidebar nav a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: 0.3s;
+  display: block;
+  line-height: 1.4;
+}
+
+.docs-sidebar nav a:hover,
+.docs-sidebar nav a.active {
+  color: var(--text);
+  padding-left: 5px;
+  border-left: 2px solid var(--secondary);
+}
+
+.docs-content {
+  padding: 3rem;
+  flex: 1;
+  background: rgba(15, 23, 42, 0.2);
+}
+.code-block {
+  background: #000;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 1.5rem 0;
+  border-left: 4px solid var(--primary);
+  font-family: "Courier New", Courier, monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.info-note {
+  display: flex;
+  gap: 1rem;
+  background: rgba(59, 130, 246, 0.1);
+  padding: 1rem;
+  border-radius: 10px;
+  align-items: center;
   color: var(--text-dim);
 }

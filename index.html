@@ -56,26 +56,51 @@
       </div>
     </section>
 
-    <section id="servicos" class="container reveal">
+    <section id="servicos-detalhes" class="container reveal">
       <div class="section-header">
-        <h2>Serviços Especializados</h2>
-        <p>Tudo o que você precisa para o seu ecossistema digital.</p>
+        <span class="badge">Nossa Expertise</span>
+        <h2>Soluções de Engenharia de Software</h2>
+        <p>Desenvolvimento focado em escalabilidade e baixo consumo de recursos.</p>
       </div>
-      <div class="services-grid">
-        <div class="service-card">
-          <i data-lucide="terminal"></i>
-          <h3>Scripts FiveM</h3>
-          <p>Sistemas de roubos, inventários e frameworks otimizados (0.01ms).</p>
+
+      <div class="detailed-services-grid">
+        <div class="service-box">
+          <div class="service-header">
+            <i data-lucide="cpu"></i>
+            <h3>Desenvolvimento de Back-end</h3>
+          </div>
+          <ul class="service-features">
+            <li><i data-lucide="check-circle"></i> Otimização de loops e threads</li>
+            <li><i data-lucide="check-circle"></i> Integração com Banco de Dados SQL/NoSQL</li>
+            <li><i data-lucide="check-circle"></i> Sistemas de segurança anti-dump</li>
+          </ul>
+          <a href="#" class="btn-text">Solicitar Orçamento <i data-lucide="arrow-right"></i></a>
         </div>
-        <div class="service-card">
-          <i data-lucide="layout"></i>
-          <h3>UI/UX Design</h3>
-          <p>NUI exclusivas para scripts e identidades visuais marcantes.</p>
+
+        <div class="service-box active">
+          <div class="service-header">
+            <i data-lucide="layers"></i>
+            <h3>Interface NUI (Front-end)</h3>
+          </div>
+          <ul class="service-features">
+            <li><i data-lucide="check-circle"></i> Interfaces em React.js ou Vue.js</li>
+            <li><i data-lucide="check-circle"></i> Design Responsivo e Moderno</li>
+            <li><i data-lucide="check-circle"></i> Experiência de Usuário (UX) Fluida</li>
+          </ul>
+          <a href="#" class="btn-text">Ver Demonstração <i data-lucide="arrow-right"></i></a>
         </div>
-        <div class="service-card">
-          <i data-lucide="bot"></i>
-          <h3>Bots de Gestão</h3>
-          <p>Automação de whitelist, logs e vendas integradas ao Discord.</p>
+
+        <div class="service-box">
+          <div class="service-header">
+            <i data-lucide="shield-check"></i>
+            <h3>Consultoria Técnica</h3>
+          </div>
+          <ul class="service-features">
+            <li><i data-lucide="check-circle"></i> Auditoria de performance de servidor</li>
+            <li><i data-lucide="check-circle"></i> Configuração de VPS/DDoS Protection</li>
+            <li><i data-lucide="check-circle"></i> Suporte Prioritário (SLA de 24h)</li>
+          </ul>
+          <a href="#" class="btn-text">Falar com Consultor <i data-lucide="arrow-right"></i></a>
         </div>
       </div>
     </section>
@@ -109,7 +134,39 @@
         </div>
       </div>
     </section>
+    <section id="documentacao" class="container reveal">
+      <div class="docs-wrapper">
+        <aside class="docs-sidebar">
+          <h4>Documentação</h4>
+          <nav>
+            <a href="#instalar" class="active">Como Instalar</a>
+            <a href="#config">Configuração (config.lua)</a>
+            <a href="#api">API para Desenvolvedores</a>
+            <a href="#erros">Solução de Problemas</a>
+          </nav>
+        </aside>
 
+        <div class="docs-content">
+          <div id="instalar">
+            <h3><i data-lucide="download"></i> Guia de Instalação</h3>
+            <p>Todos os nossos scripts seguem um padrão rigoroso de instalação via <strong>Apex Installer</strong> ou manual.</p>
+
+            <div class="code-block">
+              <code>
+                        1. Extraia a pasta 'apex_script' em resources<br>
+                        2. Adicione 'ensure apex_script' no seu server.cfg<br>
+                        3. Configure sua licença no arquivo 'config.lua'
+                    </code>
+            </div>
+
+            <div class="info-note">
+              <i data-lucide="info"></i>
+              <p><strong>Nota Técnica:</strong> Certifique-se de que a versão do seu artefato seja superior a 5848.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <section id="avaliacoes" class="container reveal">
       <div class="section-header">
         <h2>O que dizem nossos clientes</h2>
@@ -195,11 +252,32 @@
   </main>
 
   <footer>
-    <div class="container">
-      <p>&copy; 2025 APEX STORE - Excelência em Desenvolvimento.</p>
+    <div class="container footer-grid">
+      <div class="footer-info">
+        <div class="logo">APEX<span>STORE</span></div>
+        <p>Soluções tecnológicas de alta performance para ecossistemas FiveM.</p>
+      </div>
+      <div class="footer-links">
+        <h4>Institucional</h4>
+        <ul>
+          <li><a href="#">Termos de Uso</a></li>
+          <li><a href="#">Política de Reembolso</a></li>
+          <li><a href="#">Privacidade</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Suporte</h4>
+        <ul>
+          <li><a href="#">Documentação</a></li>
+          <li><a href="#">Status do Sistema</a></li>
+          <li><a href="mailto:contato@apexstore.com">Contato via E-mail</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom container">
+      <p>&copy; 2025 APEX STORE - Todos os direitos reservados.</p>
     </div>
   </footer>
-
   <script src="script.js"></script>
 </body>
 

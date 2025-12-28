@@ -73,15 +73,15 @@ export default async function handler(req, res) {
     const isCEO = memberData.roles.includes(CEO_ROLE_ID);
 
     if (isCEO) {
-      // Criamos dois cookies: um invisível (seguro) e um visível (para o site)
       res.setHeader("Set-Cookie", [
         "apex_auth=true; Path=/; HttpOnly; Max-Age=86400; SameSite=Strict",
         "apex_ui_logged=true; Path=/; Max-Age=86400; SameSite=Strict",
       ]);
-      return res.redirect("/p/admin");
+      // Use a rota "bonita" que definimos no vercel.json
+      return res.redirect("/p/admin-dash-77");
     } else {
       return res.send(
-        '<script>alert("Acesso Negado: Você não é CEO."); window.location.href="/p/login";</script>'
+        '<script>alert("Acesso Negado: Você não é CEO."); window.location.href="/admin-login";</script>'
       );
     }
   } catch (error) {

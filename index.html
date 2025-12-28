@@ -67,12 +67,12 @@
         <div class="service-box">
           <div class="service-header">
             <i data-lucide="cpu"></i>
-            <h3>Desenvolvimento de Back-end</h3>
+            <h3>Desenvolvimento de Sistemas</h3>
           </div>
           <ul class="service-features">
-            <li><i data-lucide="check-circle"></i> Otimização de loops e threads</li>
-            <li><i data-lucide="check-circle"></i> Integração com Banco de Dados SQL/NoSQL</li>
-            <li><i data-lucide="check-circle"></i> Sistemas de segurança anti-dump</li>
+            <li><i data-lucide="check-circle"></i> Sistemas Otimizados para gerir sua cidade.</li>
+            <li><i data-lucide="check-circle"></i> Integração com Banco de Dados SQL.</li>
+            <li><i data-lucide="check-circle"></i> Manutenção e atualizações constantes.</li>
           </ul>
           <a href="#" class="btn-text">Solicitar Orçamento <i data-lucide="arrow-right"></i></a>
         </div>
@@ -80,12 +80,12 @@
         <div class="service-box active">
           <div class="service-header">
             <i data-lucide="layers"></i>
-            <h3>Interface NUI (Front-end)</h3>
+            <h3>Design Gráfico</h3>
           </div>
           <ul class="service-features">
-            <li><i data-lucide="check-circle"></i> Interfaces em React.js ou Vue.js</li>
-            <li><i data-lucide="check-circle"></i> Design Responsivo e Moderno</li>
-            <li><i data-lucide="check-circle"></i> Experiência de Usuário (UX) Fluida</li>
+            <li><i data-lucide="check-circle"></i> Artes como Logos e Banners.</li>
+            <li><i data-lucide="check-circle"></i> Identidade Visual única.</li>
+            <li><i data-lucide="check-circle"></i> Artes promocionais.</li>
           </ul>
           <a href="#" class="btn-text">Ver Demonstração <i data-lucide="arrow-right"></i></a>
         </div>
@@ -93,14 +93,14 @@
         <div class="service-box">
           <div class="service-header">
             <i data-lucide="shield-check"></i>
-            <h3>Consultoria Técnica</h3>
+            <h3>Scripts & Bots</h3>
           </div>
           <ul class="service-features">
-            <li><i data-lucide="check-circle"></i> Auditoria de performance de servidor</li>
-            <li><i data-lucide="check-circle"></i> Configuração de VPS/DDoS Protection</li>
-            <li><i data-lucide="check-circle"></i> Suporte Prioritário (SLA de 24h)</li>
+            <li><i data-lucide="check-circle"></i> Veículos, roupas e estruturas do jeito que você quer.</li>
+            <li><i data-lucide="check-circle"></i> Configuração de Script.</li>
+            <li><i data-lucide="check-circle"></i> Scripts novos e Bots inovadores para sua cidade.</li>
           </ul>
-          <a href="#" class="btn-text">Falar com Consultor <i data-lucide="arrow-right"></i></a>
+          <a href="#" class="btn-text">Falar com Desenvolvedor <i data-lucide="arrow-right"></i></a>
         </div>
       </div>
     </section>
@@ -284,6 +284,97 @@
       <p>&copy; 2025 APEX STORE - Todos os direitos reservados.</p>
     </div>
   </footer>
+  <div id="modal-orcamento" class="modal-overlay">
+    <div class="modal-card">
+      <button class="close-modal" onclick="closeBudgetModal()">&times;</button>
+
+      <h3 id="modal-title"><i data-lucide="file-text"></i> Solicitar Orçamento</h3>
+      <p id="modal-desc">Preencha os detalhes abaixo e nossa equipe entrará em contato.</p>
+
+      <form id="form-orcamento">
+        <div class="input-group">
+          <label>Seu ID do Discord (Numérico)</label>
+          <input type="text" id="discord-id" placeholder="Ex: 623880120612159517" required>
+        </div>
+
+        <div class="input-group">
+          <label>Finalidade do Sistema</label>
+          <input type="text" id="sistema-alvo" placeholder="Ex: Sistema de Facção, Concessionária..." required>
+        </div>
+
+        <div class="input-group">
+          <label>Funções Desejadas</label>
+          <textarea id="funcoes" rows="3" placeholder="Descreva brevemente o que o script deve fazer..." required></textarea>
+        </div>
+
+        <div class="input-group">
+          <label>Prazo Estimado</label>
+          <input type="text" id="prazo" placeholder="Ex: 1 semana, Imediato..." required>
+        </div>
+
+        <button type="submit" class="btn-discord" style="width: 100%; border: none; cursor: pointer;">
+          Enviar Solicitação <i data-lucide="send"></i>
+        </button>
+      </form>
+
+      <div id="dev-list-container" style="display: none;">
+        <div class="ceo-list">
+          <div class="ceo-item">
+            <img src="https://ui-avatars.com/api/?name=Marcelin&background=06b6d4&color=fff" alt="Marcelin">
+            <div class="ceo-info">
+              <span class="ceo-name">Marcelin</span>
+              <span class="ceo-tag">CEO & Art</span>
+            </div>
+            <span class="status-online"></span>
+          </div>
+          <div class="ceo-item">
+            <img src="https://ui-avatars.com/api/?name=Tonin&background=06b6d4&color=fff" alt="Marcelin">
+            <div class="ceo-info">
+              <span class="ceo-name">Tonin</span>
+              <span class="ceo-tag">CEO & Bot Dev</span>
+            </div>
+            <span class="status-online"></span>
+          </div>
+          <div class="ceo-item">
+            <img src="https://ui-avatars.com/api/?name=Dark&background=06b6d4&color=fff" alt="Marcelin">
+            <div class="ceo-info">
+              <span class="ceo-name">Dark</span>
+              <span class="ceo-tag">CEO & Software Dev</span>
+            </div>
+            <span class="status-online"></span>
+          </div>
+          <div class="ceo-item">
+            <img src="https://ui-avatars.com/api/?name=Lzin&background=06b6d4&color=fff" alt="Marcelin">
+            <div class="ceo-info">
+              <span class="ceo-name">Lzin</span>
+              <span class="ceo-tag">CEO & Script Dev</span>
+            </div>
+            <span class="status-online"></span>
+          </div>
+        </div>
+
+        <div class="ticket-notice">
+          <i data-lucide="ticket"></i>
+          <p>Para entrar em contato, abra um <strong>ticket</strong> em nosso discord.</p>
+          <a href="https://discord.gg/ah74B6Ncru" target="_blank" class="btn-discord" style="display: block; text-align: center; margin-top: 1rem;">
+            Ir para o Discord
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="toast-container" class="toast-container"></div>
+  <div id="modal-galeria" class="modal-overlay">
+    <div class="modal-card gallery-card">
+      <button class="close-modal" onclick="closeGallery()">&times;</button>
+      <h3><i data-lucide="image"></i> Nosso Portfólio de Design</h3>
+      <div class="gallery-grid">
+        <img src="Imagens/logo1.png" alt="Logo 1">
+        <img src="Imagens/banner1.png" alt="Banner 1">
+        <img src="Imagens/logo2.png" alt="Logo 2">
+      </div>
+    </div>
+  </div>
   <script src="script.js"></script>
 </body>
 

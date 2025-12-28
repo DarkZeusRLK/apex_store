@@ -185,6 +185,7 @@
       if (!nome || !valor) return alert("Preencha os campos obrigatórios!");
 
       // Monta a URL com os parâmetros para o checkout ler
+      // O link deve começar com /checkout (sem o .html e sem o /p/)
       const link = `${window.location.origin}/checkout?n=${nome}&v=${valor}&d=${desc}`;
 
       const resDiv = document.getElementById('resultado-venda');

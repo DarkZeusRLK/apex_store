@@ -1,6 +1,7 @@
 export default async function handler(req, res) {
   const { code } = req.query;
 
+  // Ajustado para usar BOT_TOKEN como você definiu
   const {
     DISCORD_CLIENT_ID,
     DISCORD_CLIENT_SECRET,
@@ -10,7 +11,6 @@ export default async function handler(req, res) {
     CEO_ROLE_ID,
   } = process.env;
 
-  // Se não houver código, manda para o Discord
   if (!code) {
     return res.redirect(
       `https://discord.com/api/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(
@@ -37,16 +37,24 @@ export default async function handler(req, res) {
     );
 
     const tokenData = await tokenResponse.json();
-    if (!tokenData.access_token)
-      throw new Error("Falha ao obter Token do Discord");
 
-    // 2. Pega o ID do Usuário logado
+    // DIAGNÓSTICO: Se não veio o access_token, vamos ver o porquê
+    if (!tokenData.access_token) {
+      return res.status(400).json({
+        erro: "O Discord recusou o código de login.",
+        motivo_real: tokenData, // Aqui o Discord dirá se é o Secret ou a URI
+        ajuda:
+          "Verifique se a DISCORD_REDIRECT_URI na Vercel é IDENTICA à do Discord Portal.",
+      });
+    }
+
+    // 2. Pega o ID do Usuário
     const userRes = await fetch("https://discord.com/api/v10/users/@me", {
       headers: { Authorization: `Bearer ${tokenData.access_token}` },
     });
     const userData = await userRes.json();
 
-    // 3. Verifica o Membro no Servidor (Usando o Bot Token)
+    // 3. Verifica o Membro (Usando BOT_TOKEN)
     const memberRes = await fetch(
       `https://discord.com/api/v10/guilds/${GUILD_ID}/members/${userData.id}`,
       {
@@ -56,29 +64,23 @@ export default async function handler(req, res) {
 
     const memberData = await memberRes.json();
 
-    // Se o bot não encontrar o membro ou der erro de permissão
     if (memberRes.status !== 200) {
-      return res.status(memberRes.status).json({
-        erro: "Membro não verificado no servidor.",
-        detalhes: memberData,
-      });
+      return res
+        .status(memberRes.status)
+        .json({ erro: "Membro não encontrado", detalhes: memberData });
     }
 
-    // 4. Validação do Cargo de CEO
     const isCEO = memberData.roles.includes(CEO_ROLE_ID);
 
     if (isCEO) {
-      // Cria o Cookie de Sessão (Dura 24h)
       res.setHeader(
         "Set-Cookie",
         "apex_auth=true; Path=/; HttpOnly; Max-Age=86400; SameSite=Strict"
       );
-      // Redireciona para o Dash (usando a rota do vercel.json)
       return res.redirect("/p/admin-dash-77");
     } else {
-      // Se não for CEO, alerta e volta para o login
       return res.send(
-        '<script>alert("Acesso Negado: Você não possui o cargo de CEO."); window.location.href="/admin-login";</script>'
+        '<script>alert("Acesso Negado: Você não é CEO."); window.location.href="/admin-login";</script>'
       );
     }
   } catch (error) {

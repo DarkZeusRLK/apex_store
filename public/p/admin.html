@@ -9,14 +9,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
-    // Função simples para verificar se o cookie de login existe
     function checkAuth() {
-      const isLoggedIn = document.cookie.split(';').some((item) => item.trim().startsWith('apex_auth='));
+      // Agora procuramos pelo cookie 'apex_ui_logged'
+      const isLoggedIn = document.cookie.split(';').some((item) => item.trim().startsWith('apex_ui_logged='));
 
       if (!isLoggedIn) {
-        // Se não estiver logado, limpa a página e manda para o login
         document.documentElement.style.display = 'none';
-        alert("Acesso restrito! Por favor, faça login.");
+        alert("Sessão expirada ou não autorizada. Faça login novamente.");
         window.location.href = "/admin-login";
       }
     }

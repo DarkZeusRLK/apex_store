@@ -2,6 +2,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
+    { "source": "/api/pix", "destination": "/api/pix.js" },
     { "source": "/admin-login", "destination": "/p/login.html" },
     { "source": "/p/admin-dash-77", "destination": "/p/admin.html" },
     { "source": "/checkout", "destination": "/p/checkout.html" },

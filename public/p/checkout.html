@@ -173,57 +173,48 @@
 
   <script>
     lucide.createIcons();
+    const params = new URLSearchParams(window.location.search);
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const nome = urlParams.get('n') || "Produto Indisponível";
-    const desc = urlParams.get('d') || "Nenhuma descrição fornecida.";
+    const nomeProd = params.get('n') || "Produto";
+    const valorProd = params.get('v') || "0";
 
-    // Valor original vindo da URL
-    let valorRaw = urlParams.get('v') || "0";
-    let valorOriginal = parseFloat(valorRaw.replace(',', '.'));
-    let valorFinal = valorOriginal;
+    document.getElementById('display-produto').innerText = nomeProd;
+    document.getElementById('display-desc').innerText = params.get('d') || "Sem descrição.";
+    document.getElementById('display-valor').innerText = parseFloat(valorProd).toLocaleString('pt-BR', { minimumFractionDigits: 2 });
 
-    // Dados do cupom permitidos para este link específico
-    const cupomPermitido = urlParams.get('cp'); // Ex: APEX10
-    const descontoPermitido = parseFloat(urlParams.get('pct')); // Ex: 10
+    async function irParaPagamento() {
+      const btn = event.currentTarget;
+      btn.innerHTML = "Gerando PIX... <i class='loader'></i>"; // Feedback de carregamento
+      btn.disabled = true;
 
-    // Preencher na tela
-    document.getElementById('display-produto').innerText = nome;
-    document.getElementById('display-desc').innerText = desc;
-    document.getElementById('display-valor').innerText = valorOriginal.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+      try {
+        // Chama a sua nova API
+        const response = await fetch(`/api/pix?valor=${valorProd}&nome_produto=${encodeURIComponent(nomeProd)}`);
+        const data = await response.json();
 
-    function aplicarCupom() {
-      const input = document.getElementById('input-cupom').value.trim().toUpperCase();
-      const msg = document.getElementById('msg-cupom');
+        if (data.copia_e_cola) {
+          // Atualiza o QR Code e a Chave na tela
+          document.querySelector('.pix-area img').src = data.qrcode;
+          document.getElementById('pix-chave').value = data.copia_e_cola;
 
-      // Validação: O que o usuário digitou é igual ao que está no link?
-      if (cupomPermitido && input === cupomPermitido) {
-        const desconto = (valorOriginal * descontoPermitido) / 100;
-        valorFinal = valorOriginal - desconto;
-
-        document.getElementById('display-valor').innerText = valorFinal.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
-        msg.style.color = "#10b981";
-        msg.innerText = `Cupom '${input}' aplicado! -${descontoPermitido}% (R$ ${desconto.toFixed(2)})`;
-
-        // Travar campos após sucesso
-        document.getElementById('input-cupom').disabled = true;
-        event.target.disabled = true;
-      } else {
-        msg.style.color = "#ef4444";
-        msg.innerText = "Este cupom não é válido para este link.";
+          // Troca de tela
+          document.getElementById('view-revisao').style.display = "none";
+          document.getElementById('view-pagamento').style.display = "block";
+          document.getElementById('step1').classList.remove('active');
+          document.getElementById('step2').classList.add('active');
+        }
+      } catch (err) {
+        alert("Erro ao gerar pagamento. Tente novamente.");
+        btn.disabled = false;
+        btn.innerText = "Confirmar e Pagar";
       }
     }
 
-    function irParaPagamento() {
-      document.getElementById('view-revisao').style.display = "none";
-      document.getElementById('view-pagamento').style.display = "block";
-      document.getElementById('step1').classList.remove('active');
-      document.getElementById('step2').classList.add('active');
-    }
-
     function copiarPix() {
-      const chave = document.getElementById("pix-chave").value;
-      navigator.clipboard.writeText(chave).then(() => { alert("Chave Pix copiada!"); });
+      const input = document.getElementById("pix-chave");
+      input.select();
+      navigator.clipboard.writeText(input.value);
+      alert("Código PIX Copiado!");
     }
   </script>
 </body>

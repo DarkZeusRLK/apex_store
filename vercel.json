@@ -2,11 +2,11 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/p/7Xk9L2", "destination": "/p/termos.html" },
-    { "source": "/p/3M2N1B", "destination": "/p/reembolso.html" },
-    { "source": "/p/9F8E7D", "destination": "/p/privacidade.html" },
     { "source": "/admin-login", "destination": "/p/login.html" },
     { "source": "/p/admin-dash-77", "destination": "/p/admin.html" },
-    { "source": "/checkout", "destination": "/p/checkout.html" }
+    { "source": "/checkout", "destination": "/p/checkout.html" },
+    { "source": "/p/7Xk9L2", "destination": "/p/termos.html" },
+    { "source": "/p/3M2N1B", "destination": "/p/reembolso.html" },
+    { "source": "/p/9F8E7D", "destination": "/p/privacidade.html" }
   ]
 }

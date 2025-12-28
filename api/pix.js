@@ -4,7 +4,7 @@ export default async function handler(req, res) {
 
   // CONFIGURAÇÕES DO SEU PIX
   // IMPORTANTE: Aqui vai APENAS a sua chave PIX (ex: seu CPF, seu Email ou Chave Aleatória)
-  const CHAVE_PIX = "SUA_CHAVE_AQUI"; // <--- COLOQUE APENAS A CHAVE AQUI
+  const CHAVE_PIX = "11443488976"; // <--- COLOQUE APENAS A CHAVE AQUI
   const NOME_RECEBEDOR = "APEX STORE";
   const CIDADE_RECEBEDOR = "RIO DE JANEIRO";
 

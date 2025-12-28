@@ -7,6 +7,7 @@
   <title>Apex Store | Dashboard CEO</title>
   <link rel="stylesheet" href="/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../Imagens/static_1.png" type="image/x-icon">
   <script src="https://unpkg.com/lucide@latest"></script>
   <script>
     function checkAuth() {
@@ -44,9 +45,10 @@
     }
 
     .admin-content {
-      flex: 1;
-      height: 100vh;
-      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* Centraliza horizontalmente */
       padding: 3rem;
     }
 
@@ -72,6 +74,15 @@
     .nav-admin li.active {
       background: rgba(139, 92, 246, 0.1);
       color: var(--primary);
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      /* Garante a centralização */
+      background: rgba(20, 20, 20, 0.5);
+      border: 1px solid rgba(139, 92, 246, 0.1);
     }
 
     .tab-content {
@@ -146,20 +157,16 @@
     </section>
 
     <section id="tab-cupons" class="tab-content">
-      <span class="badge">Marketing</span>
-      <h1 style="margin-top: 1rem;">Cupons de Desconto</h1>
-      <p style="opacity: 0.6; margin-bottom: 2.5rem;">Gerencie códigos promocionais para sua loja.</p>
-
-      <div class="modal-card" style="max-width: 600px;">
+      <div class="modal-card">
         <div class="input-group">
           <label>Código do Cupom</label>
-          <input type="text" placeholder="Ex: APEX10">
+          <input type="text" id="cupom-codigo" placeholder="Ex: APEX10">
         </div>
         <div class="input-group">
           <label>Porcentagem de Desconto (%)</label>
-          <input type="number" placeholder="Ex: 10">
+          <input type="number" id="cupom-porcentagem" placeholder="Ex: 10">
         </div>
-        <button class="btn-secondary" style="width: 100%; border:none; cursor:pointer;">
+        <button class="btn-secondary" style="width: 100%; border:none; cursor:pointer;" onclick="ativarCupom()">
           Ativar Cupom <i data-lucide="plus"></i>
         </button>
       </div>
@@ -199,6 +206,22 @@
         Copiar Link
     </button>
   `;
+    }
+    function ativarCupom() {
+      const codigo = document.getElementById('cupom-codigo').value.toUpperCase();
+      const porcentagem = document.getElementById('cupom-porcentagem').value;
+
+      if (!codigo || !porcentagem) return alert("Preencha os dados do cupom!");
+
+      // Salva o cupom no sistema (localStorage para este exemplo)
+      const cupomData = { codigo, desconto: parseFloat(porcentagem) };
+      localStorage.setItem('apex_cupom', JSON.stringify(cupomData));
+
+      alert(`Cupom ${codigo} de ${porcentagem}% ativado com sucesso!`);
+
+      // Limpa os campos
+      document.getElementById('cupom-codigo').value = '';
+      document.getElementById('cupom-porcentagem').value = '';
     }
   </script>
 </body>

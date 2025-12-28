@@ -3,12 +3,11 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/api/pix", "destination": "/api/pix.js" },
-    { "source": "/admin", "destination": "/p/admin.html" },
-    { "source": "/admin-login", "destination": "/p/login.html" },
-    { "source": "/p/admin-dash-77", "destination": "/p/admin.html" },
-    { "source": "/checkout", "destination": "/p/checkout.html" },
-    { "source": "/termos", "destination": "/p/termos.html" },
-    { "source": "/reembolso", "destination": "/p/reembolso.html" },
-    { "source": "/privacidade", "destination": "/p/privacidade.html" }
+    { "source": "/admin", "destination": "/p/admin" },
+    { "source": "/admin-login", "destination": "/p/login" },
+    { "source": "/checkout", "destination": "/p/checkout" },
+    { "source": "/termos", "destination": "/p/termos" },
+    { "source": "/reembolso", "destination": "/p/reembolso" },
+    { "source": "/privacidade", "destination": "/p/privacidade" }
   ]
 }

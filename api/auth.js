@@ -5,7 +5,7 @@ export default async function handler(req, res) {
     DISCORD_CLIENT_ID,
     DISCORD_CLIENT_SECRET,
     DISCORD_REDIRECT_URI,
-    DISCORD_BOT_TOKEN,
+    BOT_TOKEN,
     GUILD_ID,
     CEO_ROLE_ID,
   } = process.env;
@@ -50,7 +50,7 @@ export default async function handler(req, res) {
     const memberRes = await fetch(
       `https://discord.com/api/v10/guilds/${GUILD_ID}/members/${userData.id}`,
       {
-        headers: { Authorization: `Bot ${DISCORD_BOT_TOKEN}` },
+        headers: { Authorization: `Bot ${BOT_TOKEN}` },
       }
     );
 

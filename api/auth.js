@@ -77,8 +77,10 @@ export default async function handler(req, res) {
         "apex_auth=true; Path=/; HttpOnly; Max-Age=86400; SameSite=Strict",
         "apex_ui_logged=true; Path=/; Max-Age=86400; SameSite=Strict",
       ]);
-      // Use a rota "bonita" que definimos no vercel.json
-      return res.redirect("/p/admin-dash-77");
+
+      // MUDANÇA AQUI: Redireciona para /admin em vez do link longo
+      // O vercel.json vai cuidar de levar para o arquivo certo
+      return res.redirect("/admin");
     } else {
       return res.send(
         '<script>alert("Acesso Negado: Você não é CEO."); window.location.href="/p/login.html";</script>'

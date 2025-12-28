@@ -19,6 +19,18 @@
         alert("Sessão expirada ou não autorizada. Faça login novamente.");
         window.location.href = "/admin-login";
       }
+      (function () {
+        // Verifica o cookie visível
+        const isLoggedIn = document.cookie.split(';').some((item) => item.trim().startsWith('apex_ui_logged='));
+
+        if (isLoggedIn) {
+          // Se estiver logado, libera o HTML
+          document.documentElement.style.display = 'block';
+        } else {
+          // Se não, redireciona imediatamente
+          window.location.href = "/admin-login";
+        }
+      })();
     }
     checkAuth();
   </script>
@@ -108,6 +120,10 @@
         opacity: 1;
         transform: translateY(0);
       }
+    }
+
+    html {
+      display: none;
     }
   </style>
 </head>

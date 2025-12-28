@@ -1,4 +1,25 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Remove 'index.html' da barra de endereços assim que o site carrega
+  if (
+    window.location.pathname.endsWith("/index.html") ||
+    window.location.pathname === "/index.html"
+  ) {
+    const cleanURL = window.location.pathname.replace("/index.html", "/");
+    window.history.replaceState({}, document.title, cleanURL);
+  }
+  // Função para mudar a URL sem recarregar a página
+  function mudarURL(slug) {
+    // Isso muda a URL para: seusite.com/p/codigo-aleatorio
+    const novaURL = window.location.origin + "/p/" + slug;
+    window.history.pushState({ path: novaURL }, "", novaURL);
+  }
+
+  // Exemplo de uso ao abrir o modal jurídico:
+  function abrirTermos() {
+    openLegal("7a1b2c"); // Abre o conteúdo
+    mudarURL("DSS6fUmEal1"); // Mascara a URL igual ao Instagram
+  }
+
   // 1. Inicializar ícones do Lucide
   if (typeof lucide !== "undefined") lucide.createIcons();
 

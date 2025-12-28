@@ -185,25 +185,32 @@
     }
 
     // Localize a função gerarLink() no seu admin.html e substitua a linha do link:
-
     function gerarLink() {
       const nome = encodeURIComponent(document.getElementById('venda-nome').value);
       const valor = document.getElementById('venda-valor').value;
       const desc = encodeURIComponent(document.getElementById('venda-desc').value);
 
+      // Novos campos para cupom opcional no link
+      const cupomCodigo = document.getElementById('cupom-codigo').value.toUpperCase().trim();
+      const cupomPorcentagem = document.getElementById('cupom-porcentagem').value;
+
       if (!nome || !valor) return alert("Preencha os campos obrigatórios!");
 
-      // Alterado para o caminho que você confirmou que funciona (/p/checkout.html)
-      // E adicionado o window.location.origin para garantir o domínio completo
-      const link = `${window.location.origin}/p/checkout.html?n=${nome}&v=${valor}&d=${desc}`;
+      // Monta a base da URL
+      let link = `${window.location.origin}/checkout?n=${nome}&v=${valor}&d=${desc}`;
+
+      // Se houver cupom preenchido, adiciona ao link
+      if (cupomCodigo && cupomPorcentagem) {
+        link += `&cp=${cupomCodigo}&pct=${cupomPorcentagem}`;
+      }
 
       const resDiv = document.getElementById('resultado-venda');
       resDiv.style.display = "block";
       resDiv.innerHTML = `
     <strong>Link para enviar ao cliente:</strong><br>
     <small style="color:rgba(255,255,255,0.5)">${link}</small><br><br>
-    <button onclick="navigator.clipboard.writeText('${link}'); alert('Link copiado!')" class="btn-secondary" style="padding: 5px 10px; font-size: 0.8rem;">
-        Copiar Link
+    <button onclick="navigator.clipboard.writeText('${link}'); alert('Link copiado!')" class="btn-secondary" style="padding: 10px; width:100%;">
+        Copiar Link com Cupom
     </button>
   `;
     }

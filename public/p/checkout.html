@@ -7,6 +7,7 @@
   <title>Apex Store | Checkout Seguro</title>
   <link rel="stylesheet" href="/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <link rel="shortcut icon" href="../Imagens/static_1.png" type="image/x-icon">
   <script src="https://unpkg.com/lucide@latest"></script>
   <style>
     /* ... (Seus estilos CSS permanecem os mesmos) ... */
@@ -165,46 +166,43 @@
   <script>
     lucide.createIcons();
 
-    // 1. CAPTURAR DADOS DA URL
     const urlParams = new URLSearchParams(window.location.search);
     const nome = urlParams.get('n') || "Produto Indisponível";
     const desc = urlParams.get('d') || "Nenhuma descrição fornecida.";
 
-    // Tratamento de valor para aceitar pontos ou vírgulas
+    // Valor original vindo da URL
     let valorRaw = urlParams.get('v') || "0";
     let valorOriginal = parseFloat(valorRaw.replace(',', '.'));
     let valorFinal = valorOriginal;
 
-    // 2. PREENCHER NA TELA INICIAL
+    // Dados do cupom permitidos para este link específico
+    const cupomPermitido = urlParams.get('cp'); // Ex: APEX10
+    const descontoPermitido = parseFloat(urlParams.get('pct')); // Ex: 10
+
+    // Preencher na tela
     document.getElementById('display-produto').innerText = nome;
     document.getElementById('display-desc').innerText = desc;
-    document.getElementById('display-valor').innerText = valorOriginal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    document.getElementById('display-valor').innerText = valorOriginal.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
 
     function aplicarCupom() {
       const input = document.getElementById('input-cupom').value.trim().toUpperCase();
       const msg = document.getElementById('msg-cupom');
-      const storedCupom = JSON.parse(localStorage.getItem('apex_cupom'));
 
-      if (!input) {
-        msg.style.color = "#ef4444";
-        msg.innerText = "Digite um código.";
-        return;
-      }
-
-      if (storedCupom && input === storedCupom.codigo) {
-        const desconto = (valorOriginal * storedCupom.desconto) / 100;
+      // Validação: O que o usuário digitou é igual ao que está no link?
+      if (cupomPermitido && input === cupomPermitido) {
+        const desconto = (valorOriginal * descontoPermitido) / 100;
         valorFinal = valorOriginal - desconto;
 
-        document.getElementById('display-valor').innerText = valorFinal.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        document.getElementById('display-valor').innerText = valorFinal.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
         msg.style.color = "#10b981";
-        msg.innerText = `Cupom aplicado! Desconto de ${storedCupom.desconto}% (R$ ${desconto.toFixed(2)})`;
+        msg.innerText = `Cupom '${input}' aplicado! -${descontoPermitido}% (R$ ${desconto.toFixed(2)})`;
 
-        // Desativar campos após aplicar com sucesso
+        // Travar campos após sucesso
         document.getElementById('input-cupom').disabled = true;
         event.target.disabled = true;
       } else {
         msg.style.color = "#ef4444";
-        msg.innerText = "Cupom inválido ou expirado.";
+        msg.innerText = "Este cupom não é válido para este link.";
       }
     }
 

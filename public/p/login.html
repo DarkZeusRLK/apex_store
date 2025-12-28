@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apex Store | Admin Login</title>
+  <link rel="stylesheet" href="/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body style="display: flex; align-items: center; justify-content: center; min-height: 100vh; background: #050505;">
+
+  <div class="cursor-glow"></div>
+
+  <div class="modal-card" style="max-width: 400px; width: 90%; text-align: center; position: relative; z-index: 10;">
+    <div class="logo" style="margin-bottom: 1.5rem; justify-content: center;">APEX<span>ADMIN</span></div>
+    <h2 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Acesso Restrito</h2>
+    <p style="color: rgba(255,255,255,0.6); margin-bottom: 2rem;">Área exclusiva para CEOs da Apex Store. Autentique-se via Discord.</p>
+
+    <a href="/api/auth" class="btn-discord" style="width: 100%; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 10px;">
+      <i data-lucide="log-in"></i> Entrar com Discord
+    </a>
+
+    <div style="margin-top: 2rem;">
+      <a href="/" style="color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.9rem;">
+        <i data-lucide="arrow-left" style="width: 14px; vertical-align: middle;"></i> Voltar para o site
+      </a>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+
+</html>

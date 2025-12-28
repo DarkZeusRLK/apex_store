@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apex Store | Checkout Seguro</title>
+  <link rel="stylesheet" href="/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    .checkout-container {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: #050505;
+    }
+
+    .checkout-card {
+      max-width: 500px;
+      width: 100%;
+      animation: fadeIn 0.6s ease;
+    }
+
+    .step-indicator {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .step {
+      background: #111;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.5);
+      transition: 0.3s;
+    }
+
+    .step.active {
+      border-color: var(--primary);
+      color: white;
+      background: rgba(139, 92, 246, 0.1);
+    }
+
+    .price-tag {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 1rem 0;
+    }
+
+    .pix-area {
+      display: none;
+      text-align: center;
+      animation: slideUp 0.4s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="cursor-glow"></div>
+
+  <div class="checkout-container">
+    <div class="checkout-card">
+
+      <div class="step-indicator">
+        <div class="step active" id="step1">1. Revisão</div>
+        <div class="step" id="step2">2. Pagamento</div>
+      </div>
+
+      <div id="view-revisao" class="modal-card">
+        <div class="logo" style="font-size: 1.2rem; margin-bottom: 1rem;">APEX<span>CHECKOUT</span></div>
+        <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #10b981; border-color: #10b981;">Ordem de Venda Ativa</span>
+
+        <h1 id="display-produto" style="margin-top: 1.5rem; font-size: 1.8rem;">Carregando produto...</h1>
+        <div class="price-tag">R$ <span id="display-valor">0,00</span></div>
+
+        <div style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem;">
+          <h4 style="margin-bottom: 0.5rem; font-size: 0.9rem; color: var(--primary);">Descrição do Pedido:</h4>
+          <p id="display-desc" style="font-size: 0.95rem; color: rgba(255,255,255,0.7); line-height: 1.6;">Aguardando detalhes...</p>
+        </div>
+
+        <button class="btn-primary" style="width: 100%; border:none; cursor:pointer;" onclick="irParaPagamento()">
+          Confirmar e Pagar Agora <i data-lucide="chevron-right"></i>
+        </button>
+      </div>
+
+      <div id="view-pagamento" class="modal-card pix-area">
+        <div class="logo" style="font-size: 1.2rem; margin-bottom: 1rem;">METODO<span>PAGAMENTO</span></div>
+        <h3>Pagamento via PIX</h3>
+        <p style="opacity: 0.6; margin-bottom: 2rem;">Escaneie o QR Code abaixo ou copie a chave.</p>
+
+        <div style="background: white; padding: 15px; display: inline-block; border-radius: 12px; margin-bottom: 1.5rem;">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=ApexStorePixStaticPlaceholder" alt="QR Code Pix" style="display: block;">
+        </div>
+
+        <div class="input-group">
+          <label>Chave Pix (Copia e Cola)</label>
+          <div style="display: flex; gap: 10px;">
+            <input type="text" value="suachavepixaqui123456789" readonly id="pix-chave" style="flex: 1;">
+            <button class="btn-secondary" onclick="copiarPix()" style="padding: 0 15px;"><i data-lucide="copy"></i></button>
+          </div>
+        </div>
+
+        <div class="info-note" style="margin-top: 1.5rem; text-align: left;">
+          <i data-lucide="shield-check"></i>
+          <p>Após o pagamento, o seu script será liberado automaticamente no Discord.</p>
+        </div>
+
+        <button class="btn-text" onclick="window.location.reload()" style="margin-top: 1.5rem;">
+          <i data-lucide="arrow-left"></i> Voltar
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // 1. CAPTURAR DADOS DA URL
+    // Exemplo esperado: /checkout?n=Script+Garagem&v=150.00&d=Instalacao+Inclusa
+    const urlParams = new URLSearchParams(window.location.search);
+    const nome = urlParams.get('n') || "Produto Indisponível";
+    const valor = urlParams.get('v') || "0,00";
+    const desc = urlParams.get('d') || "Nenhuma descrição fornecida para esta ordem.";
+
+    // 2. PREENCHER NA TELA
+    document.getElementById('display-produto').innerText = nome;
+    document.getElementById('display-valor').innerText = valor;
+    document.getElementById('display-desc').innerText = desc;
+
+    function irParaPagamento() {
+      document.getElementById('view-revisao').style.display = "none";
+      document.getElementById('view-pagamento').style.display = "block";
+      document.getElementById('step1').classList.remove('active');
+      document.getElementById('step2').classList.add('active');
+    }
+
+    function copiarPix() {
+      const copyText = document.getElementById("pix-chave");
+      copyText.select();
+      document.execCommand("copy");
+      alert("Chave Pix copiada!");
+    }
+  </script>
+</body>
+
+</html>

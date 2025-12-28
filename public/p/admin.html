@@ -8,6 +8,20 @@
   <link rel="stylesheet" href="/style.css">
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    // Função simples para verificar se o cookie de login existe
+    function checkAuth() {
+      const isLoggedIn = document.cookie.split(';').some((item) => item.trim().startsWith('apex_auth='));
+
+      if (!isLoggedIn) {
+        // Se não estiver logado, limpa a página e manda para o login
+        document.documentElement.style.display = 'none';
+        alert("Acesso restrito! Por favor, faça login.");
+        window.location.href = "/admin-login";
+      }
+    }
+    checkAuth();
+  </script>
   <style>
     :root {
       --sidebar-width: 280px;

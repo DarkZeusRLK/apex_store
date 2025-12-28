@@ -135,35 +135,71 @@
       </div>
     </section>
     <section id="documentacao" class="container reveal">
-      <div class="docs-wrapper">
-        <aside class="docs-sidebar">
-          <h4>Documentação</h4>
-          <nav>
-            <a href="#instalar" class="active">Como Instalar</a>
-            <a href="#config">Configuração (config.lua)</a>
-            <a href="#api">API para Desenvolvedores</a>
-            <a href="#erros">Solução de Problemas</a>
-          </nav>
-        </aside>
+      <div class="section-header" style="margin-bottom: 3rem;">
+        <span class="badge">Workflow</span>
+        <h2 style="letter-spacing: 2px;">SCRIPTS FIVEM</h2>
+        <p>Entenda o processo de criação, do ticket à entrega final.</p>
+      </div>
+      <div class="docs-wrapper" style="display: block;">
+        <div class="docs-content" style="max-width: 100%;">
 
-        <div class="docs-content">
-          <div id="instalar">
-            <h3><i data-lucide="download"></i> Guia de Instalação</h3>
-            <p>Todos os nossos scripts seguem um padrão rigoroso de instalação via <strong>Apex Installer</strong> ou manual.</p>
+          <div id="ticket" style="margin-bottom: 5rem;"> <span class="badge">Passo 01</span>
+            <h3 style="font-size: 1.8rem; margin-top: 1rem;">
+              <i data-lucide="message-square" style="color: var(--primary);"></i> Inicie seu Projeto no Discord
+            </h3>
+            <p>Tudo começa em nosso <strong>Discord Oficial</strong>. Para solicitar um sistema exclusivo, você deve abrir um ticket de orçamento na categoria correspondente.</p>
 
-            <div class="code-block">
+            <div class="code-block" style="margin-top: 1.5rem;">
               <code>
-                        1. Extraia a pasta 'apex_script' em resources<br>
-                        2. Adicione 'ensure apex_script' no seu server.cfg<br>
-                        3. Configure sua licença no arquivo 'config.lua'
-                    </code>
-            </div>
-
-            <div class="info-note">
-              <i data-lucide="info"></i>
-              <p><strong>Nota Técnica:</strong> Certifique-se de que a versão do seu artefato seja superior a 5848.</p>
+            1. Entre no Discord da Apex Store<br>
+            2. Vá até o canal #tickets<br>
+            3. Selecione a opção "Solicitar Script Personalizado"
+          </code>
             </div>
           </div>
+
+          <div id="detalhamento" style="margin-bottom: 5rem;">
+            <span class="badge">Passo 02</span>
+            <h3 style="font-size: 1.8rem; margin-top: 1rem;">
+              <i data-lucide="edit-3" style="color: var(--primary);"></i> Briefing e Estilização
+            </h3>
+            <p>Nesta etapa, você descreve a lógica do seu script. É fundamental detalhar como o sistema deve funcionar e como deve ser a aparência da interface (NUI).</p>
+
+            <ul style="list-style: none; padding: 1.5rem; background: rgba(255,255,255,0.03); border-radius: 8px; margin-top: 1rem;">
+              <li style="margin-bottom: 0.8rem;"><i data-lucide="check" style="width: 16px; color: var(--primary); margin-right: 10px;"></i> <strong>Funcionalidades:</strong> Regras de negócio e comandos.</li>
+              <li><i data-lucide="check" style="width: 16px; color: var(--primary); margin-right: 10px;"></i> <strong>Design:</strong> Cores, formas e layout preferido.</li>
+            </ul>
+          </div>
+
+          <div id="producao" style="margin-bottom: 5rem;">
+            <span class="badge">Passo 03</span>
+            <h3 style="font-size: 1.8rem; margin-top: 1rem;">
+              <i data-lucide="cpu" style="color: var(--primary);"></i> Desenvolvimento e Testes
+            </h3>
+            <p>Após o envio das informações, os desenvolvedores <strong>DARK e TONIN</strong> iniciam a codificação do projeto.</p>
+
+            <div class="info-note" style="margin-top: 1.5rem;">
+              <i data-lucide="shield-check"></i>
+              <p><strong>Garantia de Performance:</strong> O script passará por testes de estresse para garantir que rode com o menor consumo de CPU possível (0.01ms).</p>
+            </div>
+          </div>
+
+          <div id="entrega" style="margin-bottom: 2rem;">
+            <span class="badge">Passo 04</span>
+            <h3 style="font-size: 1.8rem; margin-top: 1rem;">
+              <i data-lucide="check-circle" style="color: var(--primary);"></i> Pagamento e Recebimento
+            </h3>
+            <p>Com o script pronto, faremos uma demonstração (vídeo ou live). Assim que você aprovar o resultado final:</p>
+
+            <div class="code-block" style="margin-top: 1.5rem; border-left: 4px solid #10b981;">
+              <code>
+            1. Você efetua o pagamento via o ticket aberto<br>
+            2. O código-fonte ou licença é enviado instantaneamente<br>
+            3. Nossa equipe auxilia na instalação inicial, se necessário
+          </code>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -266,9 +302,9 @@
       <div class="footer-links">
         <h4>Institucional</h4>
         <ul>
-          <li><a href="#">Termos de Uso</a></li>
-          <li><a href="#">Política de Reembolso</a></li>
-          <li><a href="#">Privacidade</a></li>
+          <li><a href="static/termos.html">Termos de Uso</a></li>
+          <li><a href="static/reembolso.html">Política de Reembolso</a></li>
+          <li><a href="static/privacidade.html">Privacidade</a></li>
         </ul>
       </div>
       <div class="footer-links">

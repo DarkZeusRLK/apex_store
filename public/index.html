@@ -161,6 +161,11 @@
         </button>
       </div>
     </section>
+    <div id="portfolioModal" class="modal-imagens">
+      <span class="close-imagens" onclick="closePortfolioModal()">&times;</span>
+      <img class="modal-imagens-content" id="imgPortfolioFull">
+      <div id="captionPortfolio"></div>
+    </div>
     <section id="documentacao" class="container reveal">
       <div class="section-header" style="margin-bottom: 3rem;">
         <span class="badge">Workflow</span>
@@ -462,6 +467,39 @@
     if (typeof lucide !== 'undefined') {
       lucide.createIcons();
     }
+    // Captura os elementos do novo modal
+    const portfolioModal = document.getElementById("portfolioModal");
+    const portfolioImgFull = document.getElementById("imgPortfolioFull");
+    const portfolioCaption = document.getElementById("captionPortfolio");
+
+    // Adiciona o evento de clique APENAS nas imagens dentro da section #portfolio
+    document.querySelectorAll('#portfolio .portfolio-item img').forEach(img => {
+      img.onclick = function () {
+        portfolioModal.style.display = "block";
+        portfolioImgFull.src = this.src;
+        // Usa o alt da imagem como legenda, ou um texto padrão se estiver vazio
+        portfolioCaption.innerHTML = this.alt || "Visualização do Projeto";
+      }
+    });
+
+    // Função para fechar
+    function closePortfolioModal() {
+      portfolioModal.style.display = "none";
+    }
+
+    // Fecha se clicar no fundo escuro
+    window.onclick = function (event) {
+      if (event.target == portfolioModal) {
+        portfolioModal.style.display = "none";
+      }
+    }
+
+    // Fecha se apertar a tecla ESC
+    document.addEventListener('keydown', function (event) {
+      if (event.key === "Escape" && portfolioModal.style.display === "block") {
+        closePortfolioModal();
+      }
+    });
   </script>
 </body>
 

@@ -966,3 +966,96 @@ footer {
     display: none;
   } /* Esconde setas no mobile */
 }
+/* Fundo do Modal de Imagens */
+.modal-imagens {
+  display: none;
+  position: fixed;
+  z-index: 10000; /* Z-index bem alto para ficar acima de tudo */
+  padding-top: 50px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.95); /* Fundo bem escuro */
+}
+
+/* A Imagem Central */
+.modal-imagens-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 1000px;
+  max-height: 85vh; /* Garante que a imagem caiba na altura da tela */
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  animation-name: zoomPortfolio;
+  animation-duration: 0.4s;
+}
+
+/* Legenda */
+#captionPortfolio {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #fff;
+  padding: 15px 0;
+  font-size: 1.2rem;
+  font-weight: 300;
+}
+
+/* Botão de Fechar específico deste modal */
+.close-imagens {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  color: #f1f1f1;
+  font-size: 50px;
+  font-weight: bold;
+  transition: 0.3s;
+  cursor: pointer;
+  z-index: 10001;
+}
+
+.close-imagens:hover,
+.close-imagens:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Animação de Zoom */
+@keyframes zoomPortfolio {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Cursor de lupa nas imagens do grid */
+.portfolio-item img {
+  cursor: zoom-in;
+  transition: transform 0.3s ease;
+}
+.portfolio-item img:hover {
+  transform: scale(1.02); /* Leve destaque ao passar o mouse */
+}
+
+/* Mobile */
+@media only screen and (max-width: 700px) {
+  .modal-imagens-content {
+    width: 95%;
+  }
+  .close-imagens {
+    right: 20px;
+    top: 10px;
+    font-size: 40px;
+  }
+}

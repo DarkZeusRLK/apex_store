@@ -110,28 +110,50 @@
         <h2>Portfólio</h2>
         <p>Alguns dos nossos trabalhos recentes.</p>
       </div>
-      <div class="portfolio-grid">
-        <div class="portfolio-item">
-          <img src="https://via.placeholder.com/400x250" alt="Projeto 1">
-          <div class="portfolio-info">
-            <h4>Script de Concessionária</h4>
-            <span>Scripts</span>
+
+      <div class="portfolio-container-wrapper">
+        <button class="portfolio-arrow left" onclick="scrollPortfolio(-1)">
+          <i data-lucide="chevron-left"></i>
+        </button>
+
+        <div class="portfolio-grid" id="portfolioGrid">
+          <div class="portfolio-item">
+            <img src="Imagens/dp_pcerj.png" alt="Projeto 1">
+            <div class="portfolio-info">
+              <h4>Delegacia PCERJ</h4>
+              <span>Scripts</span>
+            </div>
+          </div>
+          <div class="portfolio-item"><img src="https://via.placeholder.com/400x250" alt="P2">
+            <div class="portfolio-info">
+              <h4>Projeto 2</h4><span>Artes</span>
+            </div>
+          </div>
+          <div class="portfolio-item"><img src="https://via.placeholder.com/400x250" alt="P3">
+            <div class="portfolio-info">
+              <h4>Projeto 3</h4><span>Sistemas</span>
+            </div>
+          </div>
+          <div class="portfolio-item"><img src="https://via.placeholder.com/400x250" alt="P4">
+            <div class="portfolio-info">
+              <h4>Projeto 4</h4><span>Design</span>
+            </div>
+          </div>
+          <div class="portfolio-item"><img src="https://via.placeholder.com/400x250" alt="P5">
+            <div class="portfolio-info">
+              <h4>Projeto 5</h4><span>Bot</span>
+            </div>
+          </div>
+          <div class="portfolio-item"><img src="https://via.placeholder.com/400x250" alt="P6">
+            <div class="portfolio-info">
+              <h4>Projeto 6</h4><span>Extra</span>
+            </div>
           </div>
         </div>
-        <div class="portfolio-item">
-          <img src="https://via.placeholder.com/400x250" alt="Projeto 2">
-          <div class="portfolio-info">
-            <h4>Logo Premium - Elite RP</h4>
-            <span>Artes</span>
-          </div>
-        </div>
-        <div class="portfolio-item">
-          <img src="https://via.placeholder.com/400x250" alt="Projeto 3">
-          <div class="portfolio-info">
-            <h4>Bot de Vendas V2</h4>
-            <span>Sistemas</span>
-          </div>
-        </div>
+
+        <button class="portfolio-arrow right" onclick="scrollPortfolio(1)">
+          <i data-lucide="chevron-right"></i>
+        </button>
       </div>
     </section>
     <section id="documentacao" class="container reveal">
@@ -419,6 +441,23 @@
     </div>
   </div>
   <script src="/script.js"></script>
+  <script>
+    function scrollPortfolio(direction) {
+      const grid = document.getElementById('portfolioGrid');
+      // Calcula quanto rolar (largura de um item + gap)
+      const scrollAmount = grid.clientWidth;
+
+      grid.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+      });
+    }
+
+    // Inicializa os ícones das setas se estiver usando Lucide
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+  </script>
 </body>
 
 </html>

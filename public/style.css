@@ -901,3 +901,68 @@ footer {
   font-size: 0.95rem;
   line-height: 1.4;
 }
+/* Container que segura a grid e as setas */
+.portfolio-container-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* A grid agora se comporta como uma linha infinita */
+.portfolio-grid {
+  display: flex;
+  gap: 20px;
+  overflow-x: hidden; /* Esconde os itens extras */
+  scroll-behavior: smooth; /* Deixa o deslize suave */
+  padding: 10px 0;
+}
+
+/* Cada item ocupa exatamente 20% da tela (para caberem 5) menos o gap */
+.portfolio-item {
+  flex: 0 0 calc(20% - 16px);
+  min-width: 250px; /* Garante que não fique pequeno demais em telas menores */
+  transition: transform 0.3s;
+}
+
+/* Estilo das Setas */
+.portfolio-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+}
+
+.portfolio-arrow:hover {
+  background: var(--primary-color); /* Use sua cor principal aqui */
+}
+
+.portfolio-arrow.left {
+  left: -25px;
+}
+.portfolio-arrow.right {
+  right: -25px;
+}
+
+/* Ajuste para celulares: mostra 1 item e permite scroll com o dedo */
+@media (max-width: 1024px) {
+  .portfolio-grid {
+    overflow-x: auto;
+  }
+  .portfolio-item {
+    flex: 0 0 80%;
+  }
+  .portfolio-arrow {
+    display: none;
+  } /* Esconde setas no mobile */
+}
